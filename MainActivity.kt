@@ -84,7 +84,7 @@ class MainActivity : ComponentActivity() {
         "ESP32_CALLE72" to "la salida por la calle 72",
         "ESP32_CALLE73" to "la salida por la calle 73",
         "ESP32_MUSEO" to "el museo",
-        "ESP32_PUNTOMUSEO" to "un punto importante del museo" // generalizado
+        "ESP32_PUNTOMUSEO" to "la sala Santiago Ayala"
     )
     private val informacionRelevante = mapOf(
         "ESP32_A" to "En el primer piso del Edificio A se encuentra la Biblioteca y el Centro Tiflotecnológico. En el segundo piso hay salones de clase. Por otro lado, en el tercer piso de este edificio están ubicados el Departamento de Lenguas y el Departamento de Sociales.",
@@ -107,7 +107,7 @@ class MainActivity : ComponentActivity() {
             "ESP32_CALLE72",
             "ESP32_CALLE73",
             "ESP32_MUSEO",
-            "ESP32_PUNTOMUSEO" //Punto interno del museo
+            "ESP32_PUNTOMUSEO"
         )
 
     //Creación e iniciación de instancias
@@ -139,7 +139,7 @@ class MainActivity : ComponentActivity() {
                     getSharedPreferences(prefsName, MODE_PRIVATE).edit {
                         putBoolean(keyFlujoIniciado, true)
                     }
-                    hablar("Bienvenido al sistema de georreferenciación") {
+                    hablar("Bienvenido al sistema de orientación") {
                         preguntarPorEscaneo()
                     }
                 }
@@ -170,7 +170,6 @@ class MainActivity : ComponentActivity() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         Log.d("ConfigChange", "Cambio de orientación detectado sin reinicio")
-        // Aquí puedes hacer ajustes adicionales si deseas reaccionar al cambio
     }
 
     //Función solicitar permisos
@@ -447,7 +446,7 @@ class MainActivity : ComponentActivity() {
                     stopScan()
 
                     val mensajeFinal = if (deviceName == "ESP32_PUNTOMUSEO") {
-                        "Has llegado a un punto importante del museo."
+                        "Has llegado a la sala Santiago Ayala, en esta sala encontraras una colección disecada de varias espacies de animales."
                     } else {
                         "Has llegado a tu destino: ${nombresAmigables[deviceName] ?: deviceName}."
                     }
@@ -485,7 +484,7 @@ class MainActivity : ComponentActivity() {
                 handlerSeleccionDispositivo = Handler(Looper.getMainLooper())
                 handlerSeleccionDispositivo?.postDelayed({
                     seleccionarDispositivoMasCercano()
-                }, 1000) // Espera 1 segundo
+                }, 1000)
             }
         }
     }
@@ -544,7 +543,7 @@ class MainActivity : ComponentActivity() {
         hablar("Hay información relevante en el punto. ¿Desea escucharla? Diga sí o no.") {
             Handler(Looper.getMainLooper()).postDelayed({
                 escucharRespuestaInformacion(mensaje, textoMenu, deviceName)
-            }, 500) // Pequeña pausa para evitar solape
+            }, 500) 
         }
     }
 
@@ -1394,7 +1393,7 @@ class MainActivity : ComponentActivity() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Sistema de georreferenciación",
+                    text = "Sistema de orientación",
                     style = MaterialTheme.typography.headlineLarge,
                     modifier = Modifier
                         .fillMaxWidth()
